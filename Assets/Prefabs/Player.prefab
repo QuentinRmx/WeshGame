@@ -2076,6 +2076,8 @@ GameObject:
   - component: {fileID: 6548595001851515700}
   - component: {fileID: 5866666020600591259}
   - component: {fileID: 5866666020600591260}
+  - component: {fileID: 5218604735400065230}
+  - component: {fileID: 7479695439868640656}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -2111,7 +2113,7 @@ Animator:
   m_GameObject: {fileID: 6584303900073391472}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: 36078ab0369161e49a29d349ae3e0739, type: 3}
-  m_Controller: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: f755574cffa496e4b8a5e1c37e59894f, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
   m_ApplyRootMotion: 1
@@ -2133,13 +2135,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9dcd8122137b49a5adac2f4b2e2c59f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  WalkSpeed: 0.1
+  MoveSpeed: 0.1
+  RotationSpeed: 1.5
+  NetworkPositionDirection:
+    m_InternalValue: {x: 0, y: 0, z: 0}
+  NetworkRotationDirection:
+    m_InternalValue: {x: 0, y: 0, z: 0}
+  NetworkPlayerState:
+    m_InternalValue: 0
   ForwardBackPosition:
     m_InternalValue: 0
   LeftRightPosition:
     m_InternalValue: 0
-  OldForwardBackPosition: 0
-  OldLeftRightPosition: 0
+  OldInputPosition: {x: 0, y: 0, z: 0}
+  OldInputRotation: {x: 0, y: 0, z: 0}
 --- !u!114 &6548595001851515700
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2186,15 +2195,48 @@ MonoBehaviour:
   SyncRotAngleX: 1
   SyncRotAngleY: 1
   SyncRotAngleZ: 1
-  SyncScaleX: 1
-  SyncScaleY: 1
-  SyncScaleZ: 1
+  SyncScaleX: 0
+  SyncScaleY: 0
+  SyncScaleZ: 0
   PositionThreshold: 0.001
   RotAngleThreshold: 0.01
   ScaleThreshold: 0.01
   InLocalSpace: 0
   Interpolate: 1
   CanCommitToTransform: 0
+--- !u!114 &5218604735400065230
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6584303900073391472}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8d0727d5ae3244e3b569694d3912374, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Animator: {fileID: 489724656809047472}
+  m_ParameterSendBits: 0
+  m_SendRate: 0.1
+--- !u!143 &7479695439868640656
+CharacterController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6584303900073391472}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Height: 1.8
+  m_Radius: 0.28
+  m_SlopeLimit: 45
+  m_StepOffset: 0.25
+  m_SkinWidth: 0.02
+  m_MinMoveDistance: 0
+  m_Center: {x: 0, y: 0.93, z: 0}
 --- !u!1 &6821364256989793639
 GameObject:
   m_ObjectHideFlags: 0
