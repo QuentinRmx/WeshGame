@@ -1,7 +1,11 @@
-﻿using TMPro;
+﻿using Common;
+using TMPro;
 using Unity.Netcode;
 using UnityEngine;
-using UnityEngine.UI;
+using UnityEngine.UIElements;
+using Button = UnityEngine.UI.Button;
+using Cursor = UnityEngine.Cursor;
+using Logger = Common.Logger;
 
 public class UIManager : Singleton<UIManager>
 {
@@ -17,6 +21,8 @@ public class UIManager : Singleton<UIManager>
 
     public Button EnablePhysicsButton;
 
+    public TMP_InputField TxtFieldRoomCode;
+
     private bool _hasServerStarted;
 
     private void Awake()
@@ -31,16 +37,21 @@ public class UIManager : Singleton<UIManager>
 
     private void Start()
     {
-        StartHostButton.onClick.AddListener(() =>
+        StartHostButton.onClick.AddListener(async () =>
         {
+            if (RelayManager.Instance.IsRelayEnabled)
+            {
+                await RelayManager.Instance.SetupRelay();
+            }
+            
             if (NetworkManager.Singleton.StartHost())
             {
-                Debug.Log("Host started...");
+                Logger.Instance.LogInfo("Host started...");
                 EnableButtons(false);
             }
             else
             {
-                Debug.Log("Host could not be started...");
+                Logger.Instance.LogError("Host could not be started...");
             }
         });
 
@@ -48,25 +59,29 @@ public class UIManager : Singleton<UIManager>
         {
             if (NetworkManager.Singleton.StartServer())
             {
-                Debug.Log("Server started...");
+                Logger.Instance.LogInfo("Server started...");
                 EnableButtons(false);
             }
             else
             {
-                Debug.Log("Server could not be started...");
+                Logger.Instance.LogError("Server could not be started...");
             }
         });
 
-        StartClientButton.onClick.AddListener(() =>
+        StartClientButton.onClick.AddListener(async () =>
         {
+            if (RelayManager.Instance.IsRelayEnabled && !string.IsNullOrEmpty(TxtFieldRoomCode.text))
+            {
+                await RelayManager.Instance.JoinRelay(TxtFieldRoomCode.text);
+            }
             if (NetworkManager.Singleton.StartClient())
             {
-                Debug.Log("Client started...");
+                Logger.Instance.LogInfo("Client started...");
                 EnableButtons(false);
             }
             else
             {
-                Debug.Log("Client could not be started...");
+                Logger.Instance.LogError("Client could not be started...");
             }
         });
 
@@ -75,7 +90,7 @@ public class UIManager : Singleton<UIManager>
         {
             if (!_hasServerStarted)
             {
-                Debug.Log("Server has not started, physics objects spawning is impossible...");
+                Logger.Instance.LogInfo("Server has not started, physics objects spawning is impossible...");
                 return;
             }
 
@@ -85,7 +100,6 @@ public class UIManager : Singleton<UIManager>
 
     private void EnableButtons(bool isEnabled)
     {
-        Debug.Log("Disabled");
         PanelButtons.gameObject.SetActive(isEnabled);
     }
 }

@@ -1,6 +1,7 @@
 ﻿using Common;
 using Unity.Netcode;
 using UnityEngine;
+using Logger = Common.Logger;
 
 public class PlayersManager : NetworkSingleton<PlayersManager>
 {
@@ -14,14 +15,14 @@ public class PlayersManager : NetworkSingleton<PlayersManager>
     {
       if (!IsServer) return;
       _playersInGame.Value++;
-      Debug.Log($"Player {id} just connected...");
+      Logger.Instance.LogWarning($"Player {id} just connected...");
     };
     
     NetworkManager.Singleton.OnClientDisconnectCallback += (id) =>
     {
       if (!IsServer) return;
       _playersInGame.Value--;
-      Debug.Log($"Player {id} just disconnected...");
+      Logger.Instance.LogWarning($"Player {id} just disconnected...");
     };
   }
 }

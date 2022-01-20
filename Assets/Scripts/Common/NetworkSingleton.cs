@@ -18,7 +18,7 @@ namespace Common
                     _instance = objs[0];
                 if (objs is { Length: > 1 })
                 {
-                    Debug.LogError("There is more than one " + typeof(T).Name + " in the scene.");
+                    Logger.Instance.LogWarning("There is more than one " + typeof(T).Name + " in the scene.");
                 }
 
                 if (_instance != null) return _instance;
