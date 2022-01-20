@@ -48,3 +48,5 @@ MonoBehaviour:
   StartHostButton: {fileID: 0}
   StartClientButton: {fileID: 0}
   PlayersInGameTMP: {fileID: 0}
+  PanelButtons: {fileID: 0}
+  EnablePhysicsButton: {fileID: 0}

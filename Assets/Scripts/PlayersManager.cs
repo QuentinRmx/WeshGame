@@ -1,4 +1,5 @@
-﻿using Unity.Netcode;
+﻿using Common;
+using Unity.Netcode;
 using UnityEngine;
 
 public class PlayersManager : NetworkSingleton<PlayersManager>
